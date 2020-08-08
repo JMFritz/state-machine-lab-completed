@@ -1,0 +1,44 @@
+{
+  "Comment": "New team member onboarding workflow",
+  "StartAt": "Create new folder in S3",
+  "States": {
+    "Create new folder in S3": {
+      "Type": "Task",
+      "Comment": "Create a folder for your new team member.",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "${CreateFolderFunctionArn}",
+        "Payload": {
+          "Input.$": "$"
+        }
+      },
+      "Next": "Store team member data in DynamoDB"
+    },
+    "Store team member data in DynamoDB": {
+      "Type": "Task",
+      "Comment": "Add new entry in the team members table.",
+      "Resource": "arn:aws:states:::dynamodb:putItem",
+      "Parameters": {
+        "TableName": "${TeamMembersTable}",
+        "Item": {
+          "memberId": {
+            "S.$": "$.Payload.memberId"
+          },
+          "firstName": {
+            "S.$": "$.Payload.firstName"
+          },
+          "lastName": {
+            "S.$": "$.Payload.lastName"
+          },
+          "teamName": {
+            "S.$": "$.Payload.teamName"
+          },
+          "folderName": {
+            "S.$": "$.Payload.folderName"
+          }
+        }
+      },
+      "End": true
+    }
+  }
+}

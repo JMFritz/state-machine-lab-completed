@@ -1,0 +1,10 @@
+{
+  "name": "createfolderfunction",
+  "version": "1.0.0",
+  "devDependencies": {
+    "aws-sdk": "~2"
+  },
+  "dependencies": {
+    "uuid": "^8.3.0"
+  }
+}
