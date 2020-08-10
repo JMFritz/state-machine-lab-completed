@@ -4,14 +4,14 @@ const s3 = new AWS.S3();
 exports.handler = async (event) => {
   console.log(JSON.stringify(event, undefined, 2));
 
-  // Access state input
+  // Access your task state input
   const { firstName, lastName, teamName } = event.Input;
 
-  // Generate unique id and construct folder name
+  // Generate ID and construct folder name
   const memberId = uuid.v4();
   const folderName = `${teamName}/${firstName}-${memberId.substr(-5)}/`;
 
-  // Construct parameters for the putObject call
+  // Construct parameters and call putObject
   const params = {
     Bucket: process.env.BUCKET_NAME,
     Key: folderName
