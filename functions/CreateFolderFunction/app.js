@@ -1,6 +1,7 @@
 const AWS = require("aws-sdk");
 const uuid = require('uuid');
 const s3 = new AWS.S3();
+
 exports.handler = async (event) => {
   console.log(JSON.stringify(event, undefined, 2));
 
